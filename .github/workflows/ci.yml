@@ -67,8 +67,9 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install coverage
-        run: pip install coverage
+      - name: Install dependencies
+        run: |
+          pip install coverage numpy matplotlib
 
       - name: Download coverage data
         uses: actions/download-artifact@v4
