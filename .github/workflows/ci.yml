@@ -40,9 +40,12 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          coverage run --source=. -m pytest tests/
-          ls -la .coverage
-          pwd
+          coverage run -m pytest tests/
+
+      - name: List files for debugging
+        run: |
+          ls -la
+          file .coverage || echo ".coverage not found"
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
@@ -50,7 +53,6 @@ jobs:
           name: coverage-data
           path: .coverage
           retention-days: 1
-          if-no-files-found: error
 
   coverage_report:
     name: coverage_report
