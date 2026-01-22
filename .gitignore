@@ -1,0 +1,33 @@
+# Coverage files
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Pytest cache
+.pytest_cache/
+__pycache__/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
