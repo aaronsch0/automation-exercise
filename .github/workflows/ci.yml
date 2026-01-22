@@ -40,12 +40,23 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          coverage run -m pytest tests/
+          coverage run -m pytest tests/ -v
+          echo "Exit code: $?"
 
       - name: List files for debugging
         run: |
+          echo "Current directory:"
+          pwd
+          echo "Files in current directory:"
           ls -la
-          file .coverage || echo ".coverage not found"
+          echo "Checking for .coverage file:"
+          if [ -f .coverage ]; then
+            echo ".coverage exists"
+            file .coverage
+            ls -lh .coverage
+          else
+            echo ".coverage NOT FOUND"
+          fi
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
