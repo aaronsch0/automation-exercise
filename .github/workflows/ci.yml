@@ -40,28 +40,17 @@ jobs:
 
       - name: Run tests with coverage
         run: |
+          # Tests ausführen
           python -m coverage run --source=. -m pytest tests/ -v
-
-      - name: List files for debugging
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Files in current directory:"
-          ls -la
-          echo "Checking for .coverage file:"
-          if [ -f .coverage ]; then
-            echo ".coverage exists"
-            file .coverage
-            ls -lh .coverage
-          else
-            echo ".coverage NOT FOUND"
-          fi
+          
+          # Fix für Upload-Problem: .coverage (versteckt) in coverage_data (sichtbar) umbenennen
+          mv .coverage coverage_data
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
         with:
           name: coverage-data
-          path: .coverage
+          path: coverage_data
           retention-days: 1
 
   coverage_report:
@@ -86,6 +75,11 @@ jobs:
         with:
           name: coverage-data
 
+      - name: Restore coverage file
+        run: |
+          # Datei wieder zurück in .coverage umbenennen, damit coverage sie findet
+          mv coverage_data .coverage
+
       - name: Generate coverage report
         run: coverage report
 
@@ -98,4 +92,3 @@ jobs:
           name: coverage-xml
           path: coverage.xml
           retention-days: 14
-          include-hidden-files: true
